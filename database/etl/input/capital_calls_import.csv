@@ -1,0 +1,7 @@
+fund_id,investor_id,call_date,due_date,amount_called,call_status
+1,1,2026-11-05,2026-11-25,500000,Outstanding
+1,2,2026-11-05,2026-11-25,750000,Outstanding
+2,7,2026-11-06,2026-11-30,1000000,Outstanding
+3,8,2026-11-06,2026-12-01,1250000,Outstanding
+1,7,2026-11-07,2026-12-01,900000,Outstanding
+999,1,2026-11-07,2026-12-05,600000,Outstanding
