@@ -2,7 +2,7 @@
 
 An in-progress application support project designed to simulate how a private capital firm might track funds, investors, portfolio activity, loans, capital calls, and distributions.
 
-The project is being built with a focus on SQL troubleshooting, root-cause analysis, data validation, and application support workflows, with planned expansion into ETL, REST APIs, Linux, logging, reporting, and AI-assisted support.
+The project is being built with a focus on SQL troubleshooting, root-cause analysis, data validation, ETL workflows, and application support, with planned expansion into REST APIs, Linux, logging, reporting, and AI-assisted support.
 
 ## Current Tech Stack
 
@@ -10,10 +10,13 @@ The project is being built with a focus on SQL troubleshooting, root-cause analy
 - SQL Server Management Studio (SSMS)
 - T-SQL
 - Git / GitHub
+- ETL / staging workflows
+- CSV data imports
+- SQL Server Integration Services (SSIS) — setup complete, automation in progress
 
 ## Database Schema
 
-The current database includes:
+The core application database includes:
 
 - `Funds`
 - `Investors`
@@ -36,7 +39,7 @@ The database currently contains realistic sample data across all core tables, in
 - 15 companies
 - 20 investments
 - 16 loans
-- 40 capital calls
+- 44 capital calls
 - 30 distributions
 
 ## SQL Support Cases
@@ -136,20 +139,48 @@ Key steps included:
 
 Resolved and validated with zero remaining commitment reconciliation mismatches.
 
+## ETL Workflow
+
+Built a staging-based ETL workflow for importing capital call data from CSV into SQL Server.
+
+The workflow includes:
+
+- Raw CSV ingestion into SQL Server
+- Staging-table processing
+- Fund validation
+- Investor validation
+- Fund-investor relationship validation
+- Amount validation
+- Date validation
+- Call-status validation
+- Rejected-record tracking using validation statuses and error messages
+- Loading only valid records into `dbo.CapitalCalls`
+- Duplicate prevention using `NOT EXISTS`
+
+The initial ETL batch contained six incoming capital-call records:
+
+- 4 valid records were successfully loaded
+- 2 invalid records were rejected and preserved in staging with error messages
+
+The ETL script was tested for rerun safety and did not create duplicate capital calls.
+
 ## Current Project Status
 
 - Core SQL Server schema complete
 - Sample data population complete
 - Six SQL support cases completed
-- SQL troubleshooting and data-quality phase complete
-- Project documentation maintained in GitHub
-- Preparing to expand into additional application-support technologies
+- SQL troubleshooting phase complete
+- Capital Calls ETL workflow complete
+- ETL validation and rejected-record handling implemented
+- Reusable ETL SQL scripts added
+- SSIS automation is the next development step
 
 ## Planned Development
 
 The next stages of the project include:
 
-- ETL / SSIS concepts and troubleshooting
+- SSIS automation of the Capital Calls ETL workflow
+- ETL troubleshooting incidents
 - Python + FastAPI REST API
 - Postman API testing
 - Ubuntu / WSL2 Linux environment
